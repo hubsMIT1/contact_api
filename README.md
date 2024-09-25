@@ -1,4 +1,4 @@
-# Project Name
+# Contact API
 
 ## Setup in Docker
 
@@ -54,11 +54,12 @@ All endpoints require authentication. Use Basic Auth or Session Auth for testing
 
 ### User Registration and Profile
 
-- `POST /api/users/register`: Register a new user
+- `POST /api/user/register`: Register a new user
   - Required fields: `name`, `phone_number`, `password`
   - Optional fields: `email`
 
-- `GET | PUT | PATCH | DELETE /api/users/profile/`: for current user's profile
+- `GET | PUT | PATCH | DELETE /api/user/profile/`: for current user's profile
+- `GET /api/user/all` : all register users
 
 
 ### Contacts

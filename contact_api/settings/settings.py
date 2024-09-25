@@ -22,6 +22,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.spl
 
 CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
+STATIC_URL = '/static/'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,10 +35,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'users',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
-
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,7 +54,7 @@ ROOT_URLCONF = 'contact_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR,'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,7 +124,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

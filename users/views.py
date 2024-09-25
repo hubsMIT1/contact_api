@@ -78,7 +78,7 @@ class UserListView(generics.ListAPIView):
   
 class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
@@ -90,7 +90,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 
 class SpamReportViewSet(viewsets.ModelViewSet):
     serializer_class = SpamReportSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
     
 
