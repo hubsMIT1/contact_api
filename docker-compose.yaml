@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  django:
+    build: .
+    container_name: contact_api
+    command: > 
+          bash -c "
+                  python manage.py makemigrations &&
+                  python mange.py migrate &&
+                  python manage.py runserver 0.0.0.0:8000
+                "
+    volumes:
+      - .:/app/
+    ports:
+      -"8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: contact_api_db
+    environment:
+      - POSTGRES_DB=contactapi
+      - POSTGRES_USER=contactapi
+      - POSTGRES_PASSWORD=contactapi
+    ports:
+      -'5432:5432'
+    volumes:
+      - contact_api_data:/var/lib/postgresql/data
+  
+volumes:
+  contact_api_data:

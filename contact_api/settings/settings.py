@@ -66,6 +66,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'contact_api.wsgi.application'
+ASGI_APPLICATION= 'contact_api.asgi.application'
 
 
 # Database

@@ -1,5 +1,12 @@
 # Project Name
 
+## Setup in Docker
+
+   >set `.env` 
+   ```
+   docker-compose build
+   docker-compose up -d
+   ```
 ## Setup
 
 1. Setup the project locally and to go the project directory.
@@ -38,8 +45,7 @@
 ## Usage
 
 - Access the admin interface at `http://localhost:8000/admin/`
-- API endpoints are available at `http://localhost:8000/api/`
-- Obtain JWT tokens at `http://localhost:8000/api/token/`
+- Obtain JWT tokens at `http://localhost:8000/api/login/`
 - Refresh JWT tokens at `http://localhost:8000/api/token/refresh/`
 
 ## API Endpoints
@@ -83,5 +89,7 @@ All endpoints require authentication. Use Basic Auth or Session Auth for testing
   - Results are paginated
 
   - `GET /api/search/{phone_number}/details/`:
+
+  - `GET /api/populate_fake_data/`: Add Fake data in db (only admin can do.)
 
   
