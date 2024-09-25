@@ -21,12 +21,10 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class UserCreateView(generics.CreateAPIView):
-        
-        
     permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer
 
-    @custom_ratelimit(rate='5/m')
+    # @custom_ratelimit(rate='5/m')
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -47,11 +45,11 @@ class UserRUDView(generics.RetrieveUpdateDestroyAPIView):
 
     # need to save the response in cache also 
     
-    @custom_ratelimit(rate='10/m')
+    # @custom_ratelimit(rate='10/m')
     def get_object(self):
         return self.request.user
 
-    @custom_ratelimit(rate='5/m')
+    # @custom_ratelimit(rate='5/m')
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -64,7 +62,7 @@ class UserRUDView(generics.RetrieveUpdateDestroyAPIView):
 
         return Response(serializer.data)
 
-    @custom_ratelimit(rate='5/m')
+    # @custom_ratelimit(rate='5/m')
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
@@ -82,9 +80,10 @@ class ContactViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
+        permission_classes = [IsAdminOrSelf]
         return Contact.objects.filter(user=self.request.user)
 
-    @custom_ratelimit(rate='50/m')
+    # @custom_ratelimit(rate='50/m')
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -95,9 +94,10 @@ class SpamReportViewSet(viewsets.ModelViewSet):
     
 
     def get_queryset(self):
+        permission_classes = [IsAdminOrSelf]
         return SpamReport.objects.filter(reporter=self.request.user)
 
-    @custom_ratelimit(rate='10/m')
+    # @custom_ratelimit(rate='10/m')
     def perform_create(self, serializer):
         serializer.save(reporter=self.request.user)
 
@@ -124,7 +124,7 @@ class SearchViewSet(viewsets.ViewSet):
                 self._paginator = self.pagination_class()
         return self._paginator
 
-    @custom_ratelimit(rate='50/m')
+    # @custom_ratelimit(rate='50/m')
     @action(detail=False, methods=['get'])
     def by_name(self, request):
         name = request.query_params.get('name', '')
@@ -163,7 +163,7 @@ class SearchViewSet(viewsets.ViewSet):
         serializer = SearchResultSerializer(results, many=True)
         return Response(serializer.data)
 
-    @custom_ratelimit(rate='50/m')
+    # @custom_ratelimit(rate='50/m')
     @action(detail=False, methods=['get'])
     def by_phone(self, request):
         phone_number = request.query_params.get('phone_number', '')
@@ -204,7 +204,7 @@ class SearchViewSet(viewsets.ViewSet):
         serializer = SearchResultSerializer(result, many=True)
         return Response(serializer.data)
 
-    @custom_ratelimit(rate='50/m')
+    # @custom_ratelimit(rate='50/m')
     @action(detail=True, methods=['get'])
     def details(self, request, pk=None):
         try:
@@ -240,7 +240,7 @@ class SearchViewSet(viewsets.ViewSet):
 
 
 @api_view(['GET'])
-@custom_ratelimit(rate='1/m')
+# @custom_ratelimit(rate='1/m')
 @permission_classes([permissions.IsAdminUser])
 def populate_fake_data(request):
     num_users = 50
